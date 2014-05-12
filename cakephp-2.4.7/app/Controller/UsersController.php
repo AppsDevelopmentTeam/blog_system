@@ -77,7 +77,7 @@ class UsersController extends AppController
 			if($user)
 			{
 				$this->Session->write('User.id', $user['User']['id']);
-				$this->redirect('/users');
+				$this->redirect('/posts');
 			} else {
 				$this->Session->setFlash('ログインに失敗しました。');
 			}
