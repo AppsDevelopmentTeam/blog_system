@@ -9,8 +9,12 @@ class PostsController extends AppController
 
 	public function index()
 	{
-		// $results = $this->Post->find('all', array('order'=>'created desc'));
-		// $this->set('results', $results);
+		$results = $this->Post->find('all', array('order'=>'created desc'));
+		$this->set('results', $results);
+	}
+
+	public function add()
+	{
 		$this->Session->read('User.id');
 		if(!empty($this->data))
 		{
