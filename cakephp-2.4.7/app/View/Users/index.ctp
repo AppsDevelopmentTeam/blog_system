@@ -2,7 +2,9 @@
 
 <h2>タイトル</h2>
 <?php
-echo $this->Form->create('User', array('action' => '/'));
+// echo $this->Form->create('User', array('action' => '/'));
+// echo $this->Form->create('Post', array('url' => array('controller' => 'users', 'action' => 'index')));
+echo $this->Form->create('Post', array('action' => 'index'));
 echo $this->Form->text('Post.title', array('required' => false));
 ?>
 </br>

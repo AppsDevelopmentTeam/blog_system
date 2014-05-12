@@ -8,20 +8,26 @@ class UsersController extends AppController
 
 	public function index()
 	{
+		/*
 		$this->Session->read('User.id');
 		if(!empty($this->data))
 		{
-			$this->Post->save(
-				array(
-					'Post' => array(
-						'user_id' => $this->Session->read('User.id'),
-						'title' => $this->data['Post']['title'],
-						'content' => $this->data['Post']['content']
+			$this->Post->set($this->data);
+			if($this->Post->validates())
+			{
+				$this->Post->save(
+					array(
+						'Post' => array(
+							'user_id' => $this->Session->read('User.id'),
+							'title' => $this->data['Post']['title'],
+							'content' => $this->data['Post']['content']
+							)
 						)
-					)
-				);
-			$this->redirect('/posts');
+					);
+				$this->redirect('/posts');
+			}
 		}
+		*/
 	}
 
 
