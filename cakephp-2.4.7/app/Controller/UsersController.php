@@ -8,42 +8,24 @@ class UsersController extends AppController
 
 	public function index()
 	{
-		/*
-		$this->Session->read('User.id');
-		if(!empty($this->data))
-		{
-			$this->Post->set($this->data);
-			if($this->Post->validates())
-			{
-				$this->Post->save(
-					array(
-						'Post' => array(
-							'user_id' => $this->Session->read('User.id'),
-							'title' => $this->data['Post']['title'],
-							'content' => $this->data['Post']['content']
-							)
-						)
-					);
-				$this->redirect('/posts');
-			}
-		}
-		*/
+		$post = $this->Post->find('all', array('order' => 'modified desc'));
+		$this->set('posts',$post);
 	}
 
 
 	public function add()
 	{
-		if(!empty($this->data))
+		if(!empty($this->request->data))
 		{
-			$this->User->set($this->data);
+			$this->User->set($this->request->data);
 			if($this->User->validates())
 			{
-				$this->Session->write('User.username', $this->data['User']['username']);
-				$this->Session->write('User.email', $this->data['User']['email']);
-				$this->Session->write('User.password', $this->data['User']['password']);
+				$this->Session->write('User.username', $this->request->data['User']['username']);
+				$this->Session->write('User.email', $this->request->data['User']['email']);
+				$this->Session->write('User.password', $this->request->data['User']['password']);
 
 				$path = IMAGES;
-				$image = $this->data['User']['picture'];
+				$image = $this->request->data['User']['picture'];
 				move_uploaded_file($image['tmp_name'], $path . DS . $image['name']);
 				$this->Session->write('User.picture', $image['name']);
 				$this->redirect('check');
@@ -66,12 +48,12 @@ class UsersController extends AppController
 
 	public function login()
 	{
-		if(!empty($this->data))
+		if(!empty($this->request->data))
 		{
 			$user = $this->User->find('first', array(
 				'conditions' => array(
-					'User.email' => $this->data['User']['email'],
-					'User.password' => $this->data['User']['password'])
+					'User.email' => $this->request->data['User']['email'],
+					'User.password' => $this->request->data['User']['password'])
 				)
 			);
 			if($user)
@@ -89,6 +71,28 @@ class UsersController extends AppController
 	public function logout()
 	{
 		$this->Session->destroy();
+	}
+
+	public function edit($id = null)
+	{
+		$this->Post->id = $id;
+		if ($this->request->is('get'))
+		{
+			$this->request->data = $this->Post->read();
+		}
+		else
+		{
+			if($this->Post->save($this->request->data))
+			{
+				$this->Session->setFlash('Success!');
+				$this->redirect(array('action'=>'index'));
+			}
+			else
+			{
+				$this->Session->setFlash('Failed!');
+				$this->Post->validationErrors;
+			}
+		}
 	}
 
 }
