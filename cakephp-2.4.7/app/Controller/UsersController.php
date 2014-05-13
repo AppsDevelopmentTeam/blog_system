@@ -73,26 +73,16 @@ class UsersController extends AppController
 		$this->Session->destroy();
 	}
 
-	public function edit($id = null)
+	public function delete($id)
 	{
-		$this->Post->id = $id;
 		if ($this->request->is('get'))
 		{
-			$this->request->data = $this->Post->read();
+			throw new MethodNotAllowedException();
 		}
-		else
+		if ($this->Post->delete($id))
 		{
-			if($this->Post->save($this->request->data))
-			{
-				$this->Session->setFlash('Success!');
-				$this->redirect(array('action'=>'index'));
-			}
-			else
-			{
-				$this->Session->setFlash('Failed!');
-				$this->Post->validationErrors;
-			}
-		}
+			$this->redirect(array('action'=>'index'));
+		} 
 	}
 
 }
