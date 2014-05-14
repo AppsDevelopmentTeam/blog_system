@@ -16,3 +16,16 @@ echo nl2br(h($post['Post']['content']));
 endforeach;
 ?>
 </ul>
+
+<ul>
+<?php
+echo $this->paginator->first($title = '<< ');
+echo $this->paginator->prev($title = '< ');
+echo $this->paginator->numbers(array(
+    'currentClass' => 'pager-active',
+    'class' => 'pager',
+    'modulus' => 3));
+echo $this->paginator->next($title = ' >');
+echo $this->paginator->last($title = ' >>');
+?>
+</ul>
