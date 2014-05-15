@@ -4,9 +4,9 @@
 <?php foreach ($posts as $post): ?>
 <li>
 <?php
-echo $this->Html->link($post['Post']['title'],'../users/view/'.$post['Post']['id']);
-?>
-<?php echo $this->Html->link('編集', array('action'=>'../posts/edit', $post['Post']['id'])); ?>
+echo $this->Html->link($post['Post']['title'], array('action' => '../users/view/'.$post['Post']['id']));
+?> 
+<?php echo $this->Html->link('編集', array('action'=>'../posts/edit', $post['Post']['id'])); ?> 
 <?php
 echo $this->Form->postlink('削除',array('action'=>'delete', $post['Post']['id']), array('confirm'=>'sure?'));
 ?>

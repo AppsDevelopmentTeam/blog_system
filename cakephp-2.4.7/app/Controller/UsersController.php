@@ -8,8 +8,8 @@ class UsersController extends AppController
 
     public function index()
     {
-        $post = $this->Post->find('all', array('order' => 'created desc'));
-        $this->set('posts',$post);
+        $posts = $this->Post->find('all', array('order' => 'created desc'));
+        $this->set('posts',$posts);
     }
 
 
