@@ -8,8 +8,17 @@ class UsersController extends AppController
 
     public function index()
     {
-        $posts = $this->Post->find('all', array('order' => 'created desc'));
-        $this->set('posts',$posts);
+        $user = $this->Session->read('User.id');
+        if($user)
+        {
+            $posts = $this->Post->find('all', array('order' => 'created desc'));
+            $this->set('posts',$posts);
+        }
+        else
+        {
+            $this->redirect('login');
+        }
+
     }
 
 
@@ -60,7 +69,7 @@ class UsersController extends AppController
             if($user)
             {
                 $this->Session->write('User.id', $user['User']['id']);
-                $this->redirect('/posts');
+                $this->redirect('/users');
             }
             else
             {
@@ -86,12 +95,6 @@ class UsersController extends AppController
             $this->Session->setFlash('削除しました');
             $this->redirect(array('action'=>'index'));
         }
-    }
-
-    public function view($id = null)
-    {
-        $this->Post->id = $id;
-        $this->set('post',$this->Post->read());
     }
 
 }

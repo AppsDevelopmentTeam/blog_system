@@ -15,3 +15,5 @@ echo $this->Form->postlink('削除',array('action'=>'delete', $post['Post']['id'
 </ul>
 </br>
 <?php echo $this->Html->link('投稿画面', array('controller'=>'posts', 'action'=>'add')) ?>
+</br>
+<?php echo $this->Html->link('ログアウト', array('action' => 'logout')) ?>

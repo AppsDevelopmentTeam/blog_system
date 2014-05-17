@@ -15,8 +15,10 @@ class PostsController extends AppController
                 'limit' => 5,
                 'order' => 'Post.created desc'),
             );
-        $result = $this->paginate('Post');
-        $this->set('results', $result);
+        $results = $this->paginate('Post');
+        $this->set('results', $results);
+        $months = $this->Post->find('all', array('order' => 'created desc'));
+        $this->set('months', $months);
     }
 
     public function add()
@@ -64,6 +66,11 @@ class PostsController extends AppController
         }
     }
 
+    public function view($id = null)
+    {
+        $this->Post->id = $id;
+        $this->set('post',$this->Post->read());
+    }
 
 }
 

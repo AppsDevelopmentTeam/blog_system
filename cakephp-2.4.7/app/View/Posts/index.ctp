@@ -4,7 +4,7 @@ foreach ($results as $post):
 ?>
 <li>
 <?php
-echo "【タイトル】" . h($post['Post']['title']);
+echo $this->Html->link($post['Post']['title'], array('action' => 'view/'.$post['Post']['id']));
 echo $post['Post']['created'];
 echo "</br>";
 echo "</br>";
@@ -15,6 +15,14 @@ echo nl2br(h($post['Post']['content']));
 <?php
 endforeach;
 ?>
+</ul>
+
+<ul>
+<?php foreach ($months as $month): ?>
+<li>
+<?php echo $month['Post']['created']; ?>
+</li>
+<?php endforeach ?>
 </ul>
 
 <ul>
