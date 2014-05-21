@@ -13,12 +13,20 @@ class PostsController extends AppController
             'Post' => array(
                 'page' => 1,
                 'limit' => 5,
-                'order' => 'Post.created desc'),
+                'order' => 'Post.created desc')
             );
         $results = $this->paginate('Post');
         $this->set('results', $results);
-        $months = $this->Post->find('all', array('order' => 'created desc'));
-        $this->set('months', $months);
+
+        //$request = '$Y$m';
+        $query = 'select date_format(created, "%Y%m") as y_m
+                from posts
+                group by date_format(created, "%Y%m")
+                order by created desc';
+
+        $year_month = $this->Post->query($query);
+        // $months = $this->Post->find('all', array('order' => 'created desc'));
+        $this->set('year_month', $year_month);
     }
 
     public function add()
@@ -70,6 +78,20 @@ class PostsController extends AppController
     {
         $this->Post->id = $id;
         $this->set('post',$this->Post->read());
+    }
+
+    public function archive()
+    { 
+        $year_month = $this->request->params['year_month'];
+        //$month =$this->request->params['month'];
+        //$lastday = date($year.'-'.$month.'-t');
+        $results = $this->Post->find('all', array(
+            'order' => 'created desc',
+            'conditions' => array(
+                    'created between ? and ?' => array($year_month.'01', $year_month. '31')
+                ),
+            ));
+        $this->set('results', $results);
     }
 
 }
