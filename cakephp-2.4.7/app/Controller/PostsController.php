@@ -9,6 +9,7 @@ class PostsController extends AppController
 
     public function index()
     {
+        // ページネーション
         $this->paginate = array(
             'Post' => array(
                 'page' => 1,
@@ -18,15 +19,14 @@ class PostsController extends AppController
         $results = $this->paginate('Post');
         $this->set('results', $results);
 
-        //$request = '$Y$m';
-        $query = 'select date_format(created, "%Y%m") as y_m
-                from posts
-                group by date_format(created, "%Y%m")
-                order by created desc';
-
-        $year_month = $this->Post->query($query);
-        // $months = $this->Post->find('all', array('order' => 'created desc'));
-        $this->set('year_month', $year_month);
+        // 月別アーカイブ
+        $query = "SELECT DATE_FORMAT(Post.created, '%Y') AS y, DATE_FORMAT(Post.created, '%m') AS m, COUNT(*)
+            FROM myblog.posts AS Post
+            GROUP BY DATE_FORMAT(Post.created, '%Y%m')
+            ORDER BY Post.created DESC";
+                                 
+        $date = $this->Post->query($query);
+        $this->set('date', $date);
     }
 
     public function add()
@@ -80,15 +80,18 @@ class PostsController extends AppController
         $this->set('post',$this->Post->read());
     }
 
+    public function year()
+    {
+        $year = $this->request->params['year'];
+    }
+
     public function archive()
     { 
         $year_month = $this->request->params['year_month'];
-        //$month =$this->request->params['month'];
-        //$lastday = date($year.'-'.$month.'-t');
         $results = $this->Post->find('all', array(
             'order' => 'created desc',
             'conditions' => array(
-                    'created between ? and ?' => array($year_month.'01', $year_month. '31')
+                    'created between ? and ?' => array($year_month. '01', $year_month. '31')
                 ),
             ));
         $this->set('results', $results);

@@ -18,9 +18,9 @@ endforeach;
 </ul>
 
 <ul>
-<?php foreach ($year_month as $value): ?>
+<?php foreach ($date as $value): ?>
 <li>
-<?php echo $this->Html->link($value[0]['y_m'], array('action' => $value[0]['y_m'])); ?>
+<?php echo $this->Html->link($value[0]['y']. '/'. $value[0]['m']. ' ('.$value[0]['COUNT(*)']. ')', array('action' => $value[0]['y']. $value[0]['m'])); ?>
 </li>
 <?php endforeach ?>
 </ul>
