@@ -3,34 +3,13 @@
 <h2>タイトル</h2>
 <?php
 echo $this->Form->create('Post', array('action' => 'add'));
-echo $this->Form->text('Post.title', array('required' => false));
-echo $this->Form->error('Post.title');
+echo $this->Form->text('title', array('required' => false));
+echo $this->Form->error('title');
 ?>
 </br>
 </br>
 <?php
-echo $this->Form->textarea('Post.content', array('required' => false, 'rows' => 20, 'wrap' => 'hard'));
-echo $this->Form->error('Post.content');
+echo $this->Form->textarea('content', array('required' => false, 'rows' => 10, 'wrap' => 'hard'));
+echo $this->Form->error('content');
 echo $this->Form->end('投稿する');
 ?>
-
-<!--
-<ul>
-<?php
-foreach ($results as $post):
-?>
-<li>
-<?php
-echo "【タイトル】" . $post['Post']['title'];
-echo $post['Post']['created'];
-echo "</br>";
-echo "</br>";
-echo $post['Post']['content'];
-?>
-</li>
-</br>
-<?php
-endforeach;
-?>
-</ul>
--->
