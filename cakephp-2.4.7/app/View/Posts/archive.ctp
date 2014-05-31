@@ -3,13 +3,13 @@ echo $this->Html->addCrumb('HOME' ,'/posts');
 echo $this->Html->getCrumbs();
 ?>
 <ul>
-<?php foreach ($results as $result): ?>
+<?php foreach ($results as $post): ?>
 <li>
 <?php
-echo h($result['Post']['title']);
+echo $this->Html->link($post['Post']['title'], array('action' => 'view/'.$post['Post']['id']));
 echo "</br>";
 echo "</br>";
-echo nl2br(h($result['Post']['content']));
+echo nl2br(h($post['Post']['content']));
 ?>
 </li>
 </br>

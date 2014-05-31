@@ -107,3 +107,4 @@ CakeLog::config('error', array(
 ));
 //debugkitの読み込み
 CakePlugin::load('DebugKit');
+CakePlugin::load('TwitterBootstrap');
